@@ -3,7 +3,7 @@
 This is a personal URLs shortener built with [Nuxt 3](https://nuxt.com) and [Nuxt UI](https://ui.nuxt.com) on top of [Cloudflare Workers](https://workers.cloudflare.com/) and [Cloudflare KV](https://www.cloudflare.com/products/workers-kv/).
 
 > **Note**
-> You can fork this project for your own use.
+> You can fork this project for your own use but this is more like a demo app than a production-ready app.
 
 _Cloudflare KV is not ideal for this use case since data propagation is not instant but it way simpler to setup than a database like D1._
 
