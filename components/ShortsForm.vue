@@ -32,7 +32,10 @@ async function createShort(event: FormSubmitEvent<{ name: string; url: string }>
 
   await useFetch('/api/urls', { method: 'POST', body: event.data })
 
-  emit('refresh')
+  setTimeout(() => {
+    // Used since Cloudflare is not yet updated
+    emit('refresh')
+  }, 50)
 
   loading.value = false
 
