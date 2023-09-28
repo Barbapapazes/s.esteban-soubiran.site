@@ -29,7 +29,7 @@ const rows = computed(() => {
 
 async function deleteItem(name: string) {
   await useFetch(`/api/urls/${name}`, { method: 'delete' })
-  setInterval(() => {
+  setTimeout(() => {
     emit('refresh') // Used since Cloudflare is not yet updated
   }, 100)
 }
