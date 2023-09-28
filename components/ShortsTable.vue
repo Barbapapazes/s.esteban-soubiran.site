@@ -31,7 +31,7 @@ async function deleteItem(name: string) {
   await useFetch(`/api/urls/${name}`, { method: 'delete' })
   setTimeout(() => {
     emit('refresh') // Used since Cloudflare is not yet updated
-  }, 100)
+  }, 400)
 }
 
 const createActions = function (row: { name: string }) {
