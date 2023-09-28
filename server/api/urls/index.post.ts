@@ -1,11 +1,10 @@
 export default defineEventHandler(async (event) => {
-  // Secure this using http authentication
+  requireBasicAuth(event)
+
   const body = await readBody(event)
 
   const key = body.key
   const url = body.url
-
-  console.log(key, url)
 
   await useStorage('db').setItem(key, url)
 

@@ -1,4 +1,6 @@
 export default defineEventHandler(async (event) => {
+  requireBasicAuth(event)
+
   const key = getRouterParam(event, 'key')
 
   if (!key) {

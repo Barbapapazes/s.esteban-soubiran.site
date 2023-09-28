@@ -1,6 +1,9 @@
 export default defineNuxtConfig({
   devtools: { enabled: true },
   routeRules: {
+    '/': {
+      ssr: false,
+    },
     '/r': {
       redirect: {
         to: '/',
@@ -10,6 +13,12 @@ export default defineNuxtConfig({
   },
   nitro: {
     storage: { db: { driver: 'cloudflare-kv-binding' } },
-    devStorage:{ db: { driver: 'fs', base: '.nuxt/data/db' } }
+    devStorage:{ db: { driver: 'fs', base: '.nuxt/data/db' } },
+    runtimeConfig: {
+      basicAuth: {
+        username: process.env.BASIC_AUTH_USERNAME,
+        password: process.env.BASIC_AUTH_PASSWORD,
+      },
+    }
   }
 })

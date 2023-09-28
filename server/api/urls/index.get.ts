@@ -1,5 +1,6 @@
 export default defineEventHandler(async (event) => {
-  // Secure this using http authentication
+  requireBasicAuth(event)
+
   const keys = await useStorage<string>('db').getKeys()
 
   return keys
