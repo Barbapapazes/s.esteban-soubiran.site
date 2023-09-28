@@ -14,7 +14,7 @@ export default defineNuxtConfig({
     },
   },
   nitro: {
-    storage: { db: { driver: 'cloudflare-kv-binding' } },
+    storage: { db: { driver: 'cloudflare-kv-binding', binding: 'shorts' } },
     devStorage: { db: { driver: 'fs', base: '.nuxt/data/db' } },
     runtimeConfig: {
       basicAuth: {
