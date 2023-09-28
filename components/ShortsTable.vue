@@ -11,36 +11,36 @@ const columns = ref([
   {
     key: 'name',
     label: 'Name',
-    sortable: true
+    sortable: true,
   },
   {
     key: 'actions',
-    label: 'Actions'
-  }
+    label: 'Actions',
+  },
 ])
 
 const rows = computed(() => {
   return props.data.map((item) => {
     return {
-      name: item
+      name: item,
     }
   })
 })
 
-const createActions = function(row: { name: string }) {
+const createActions = function (row: { name: string }) {
   return [
-  [{
-    label: 'Open',
-    icon: 'i-heroicons-eye',
-    to: `/r/${row.name}`,
-    target: '_blank'
-  },
-  {
-    label: 'Delete',
-    icon: 'i-heroicons-trash',
-    click: () => emit('refresh')
-  }]
-]
+    [{
+      label: 'Open',
+      icon: 'i-heroicons-eye',
+      to: `/r/${row.name}`,
+      target: '_blank',
+    },
+    {
+      label: 'Delete',
+      icon: 'i-heroicons-trash',
+      click: () => emit('refresh'),
+    }],
+  ]
 }
 </script>
 

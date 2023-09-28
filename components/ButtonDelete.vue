@@ -18,7 +18,7 @@ async function deleteItem() {
 </script>
 
 <template>
-  <UButton color="red" icon="i-heroicons-trash" :loading="loading" @click="deleteItem()">
+  <UButton type="button" color="red" icon="i-heroicons-trash" :loading="loading" @click="deleteItem()">
     Delete
   </UButton>
 </template>
