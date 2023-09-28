@@ -5,6 +5,8 @@ This is a personal URLs shortener built with [Nuxt 3](https://nuxt.com) and [Nux
 > **Note**
 > You can fork this project for your own use.
 
+_Cloudflare KV is not ideal for this use case since data propagation is not instant but it way simpler to setup than a database like D1._
+
 ## Setup
 
 Make sure to install the dependencies:
