@@ -35,7 +35,7 @@ async function createShort(event: FormSubmitEvent<{ name: string; url: string }>
   setTimeout(() => {
     // Used since Cloudflare is not yet updated
     emit('refresh')
-  }, 50)
+  }, 100)
 
   loading.value = false
 
