@@ -1,6 +1,6 @@
 # Personal URLs Shortener
 
-This is a personal URLs shortener built with [Nuxt 3](https://nuxt.com) on top of [Cloudflare Workers](https://workers.cloudflare.com/) and [Cloudflare KV](https://www.cloudflare.com/products/workers-kv/).
+This is a personal URLs shortener built with [Nuxt 3](https://nuxt.com) and [Nuxt UI](https://ui.nuxt.com) on top of [Cloudflare Workers](https://workers.cloudflare.com/) and [Cloudflare KV](https://www.cloudflare.com/products/workers-kv/).
 
 > **Note**
 > You can fork this project for your own use.
