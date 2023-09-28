@@ -1,13 +1,13 @@
 export default defineNuxtConfig({
-  devtools: { enabled: true },
-  routeRules: {
-    '/': {
-      ssr: false,
-    },
-    '/r': {
-      redirect: {
-        to: '/',
-        statusCode: 302
+   modules: ['@nuxt/ui'],
+   routeRules: {
+     '/': {
+       ssr: false,
+      },
+      '/r': {
+        redirect: {
+          to: '/',
+          statusCode: 302
       }
     }
   },
@@ -20,5 +20,6 @@ export default defineNuxtConfig({
         password: process.env.BASIC_AUTH_PASSWORD,
       },
     }
-  }
+  },
+  devtools: { enabled: true },
 })
