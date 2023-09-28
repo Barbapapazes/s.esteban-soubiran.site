@@ -27,6 +27,13 @@ const rows = computed(() => {
   })
 })
 
+async function deleteItem(name: string) {
+  await useFetch(`/api/urls/${name}`, { method: 'delete' })
+  setInterval(() => {
+    emit('refresh') // Used since Cloudflare is not yet updated
+  }, 100)
+}
+
 const createActions = function (row: { name: string }) {
   return [
     [{
@@ -38,7 +45,7 @@ const createActions = function (row: { name: string }) {
     {
       label: 'Delete',
       icon: 'i-heroicons-trash',
-      click: () => emit('refresh'),
+      click: () => deleteItem(row.name),
     }],
   ]
 }
