@@ -5,6 +5,8 @@ export default defineEventHandler(async (event) => {
 
   const redirects = await useDb().select().from(tables.redirects).leftJoin(tables.activities, eq(tables.activities.redirectId, tables.redirects.id)).all()
 
+  return redirects
+
   const data = redirects.reduce((acc, { redirects, activities }) => {
     const index = acc.findIndex(({ id }) => id === redirects.id)
     const isNewItem = index === -1
