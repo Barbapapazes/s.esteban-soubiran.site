@@ -3,8 +3,18 @@ import { eq } from 'drizzle-orm'
 export default defineEventHandler(async (event) => {
   requireBasicAuth(event)
 
-  return await useDb().select().from(tables.redirects).fullJoin(tables.activities, eq(tables.activities.redirectId, tables.redirects.id)).all()
+  const redirects = await useDb().select().from(tables.redirects).all()
 
+  return redirects.map((redirect) => {
+    return {
+      id: redirect.id,
+      name: redirect.name,
+      url: redirect.url,
+      countActivities: 0, // Due to CF bug, we only return 0
+    }
+  })
+
+  // @see CF bug https://github.com/cloudflare/workers-sdk/issues/3160
   const redirects = await useDb().select().from(tables.redirects).leftJoin(tables.activities, eq(tables.activities.redirectId, tables.redirects.id)).all()
 
   return redirects
