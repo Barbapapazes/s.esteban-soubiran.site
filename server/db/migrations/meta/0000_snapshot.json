@@ -1,7 +1,7 @@
 {
   "version": "5",
   "dialect": "sqlite",
-  "id": "d7fe4047-ce61-4262-965e-ddfcb8d9bb3d",
+  "id": "d35425b2-f253-4569-8db4-9649e4ec5eb5",
   "prevId": "00000000-0000-0000-0000-000000000000",
   "tables": {
     "activities": {
@@ -12,7 +12,7 @@
           "type": "integer",
           "primaryKey": true,
           "notNull": true,
-          "autoincrement": true
+          "autoincrement": false
         },
         "redirect_id": {
           "name": "redirect_id",
@@ -56,7 +56,7 @@
           "type": "integer",
           "primaryKey": true,
           "notNull": true,
-          "autoincrement": true
+          "autoincrement": false
         },
         "name": {
           "name": "name",
