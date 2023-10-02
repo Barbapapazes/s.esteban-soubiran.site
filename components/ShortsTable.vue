@@ -1,6 +1,13 @@
 <script lang="ts" setup>
-const props = defineProps<{
-  data: string[]
+interface Redirect {
+  name: string
+  url: string
+  id: number
+  countActivities: number
+}
+
+defineProps<{
+  data: Redirect[]
 }>()
 
 const emit = defineEmits<{
@@ -14,45 +21,71 @@ const columns = ref([
     sortable: true,
   },
   {
+    key: 'url',
+    label: 'URL',
+    sortable: true,
+  },
+  {
+    key: 'countActivities',
+    label: 'Activities',
+    sortable: true,
+  },
+  {
     key: 'actions',
     label: 'Actions',
   },
 ])
 
-const rows = computed(() => {
-  return props.data.map((item) => {
-    return {
-      name: item,
-    }
-  })
-})
-
 async function deleteItem(name: string) {
-  await useFetch(`/api/urls/${name}`, { method: 'delete' })
-  setTimeout(() => {
-    emit('refresh') // Used since Cloudflare is not yet updated
-  }, 400)
+  await useFetch(`/api/redirects/${name}`, { method: 'delete' })
+  emit('refresh')
 }
 
-const createActions = function (row: { name: string }) {
+const toast = useToast()
+const createActions = function (row: Redirect) {
+  const origin = window.location.origin
+  const source = ref(`${origin}/r/${row.name}`)
+  const { copy } = useClipboard({ source })
+
   return [
+    [
+      {
+        label: 'Copy Short',
+        icon: 'i-heroicons-clipboard',
+        click: () => {
+          copy()
+          toast.add({
+            id: 'copy-short',
+            title: `Short '${row.name}' copied`,
+            icon: 'i-heroicons-clipboard-document-check',
+          })
+        },
+      },
+      {
+        label: 'Open URL',
+        icon: 'i-heroicons-eye',
+        to: row.url,
+        target: '_blank',
+      },
+    ],
     [{
-      label: 'Open',
-      icon: 'i-heroicons-eye',
-      to: `/r/${row.name}`,
-      target: '_blank',
-    },
-    {
       label: 'Delete',
       icon: 'i-heroicons-trash',
-      click: () => deleteItem(row.name),
+      click: () => {
+        deleteItem(row.name)
+        toast.add({
+          id: 'delete-short',
+          title: `Short ${row.name} deleted`,
+          icon: 'i-heroicons-trash',
+        })
+      },
     }],
   ]
 }
 </script>
 
 <template>
-  <UTable :rows="rows" :columns="columns" :sort="{ column: 'name', direction: 'asc' }">
+  <UTable :rows="data" :columns="columns" :sort="{ column: 'name', direction: 'asc' }">
     <template #actions-data="{ row }">
       <UDropdown :items="createActions(row)">
         <UButton color="gray" variant="ghost" icon="i-heroicons-ellipsis-horizontal-20-solid" />

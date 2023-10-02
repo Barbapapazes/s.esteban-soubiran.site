@@ -1,17 +1,17 @@
+import { eq } from 'drizzle-orm'
+
 export default defineEventHandler(async (event) => {
-  const id = getRouterParam(event, 'id')
+  const name = getRouterParam(event, 'id')
 
-  if (!id) {
-    createError({ statusCode: 400, message: 'No ID provided' })
-    return
-  }
+  if (!name)
+    throw createError({ statusCode: 400, message: 'No name provided' })
 
-  const url = await useStorage<string>('db').getItem(id)
+  const [redirect, ..._] = await useDb().select({ url: tables.redirects.url, id: tables.redirects.id }).from(tables.redirects).where(eq(tables.redirects.name, name)).limit(1).all()
 
-  if (!url) {
-    createError({ statusCode: 404, message: 'Not Found' })
-    return
-  }
+  if (!redirect)
+    throw createError({ statusCode: 404, message: 'Not Found' })
 
-  return sendRedirect(event, url, 302)
+  await useDb().insert(tables.activities).values({ redirectId: redirect.id, usedAt: new Date() }).run()
+
+  return sendRedirect(event, redirect.url, 302)
 })

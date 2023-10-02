@@ -1,7 +1,7 @@
 import process from 'node:process'
 
 export default defineNuxtConfig({
-  modules: ['@nuxt/ui'],
+  modules: ['@nuxt/ui', '@vueuse/nuxt'],
   routeRules: {
     '/': {
       ssr: false,

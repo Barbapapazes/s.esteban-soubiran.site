@@ -1,9 +1,14 @@
-name = "s.esteban-soubiran.site"
+name = "s-esteban-soubiran-site"
 compatibility_date = "2023-08-07"
 
 kv_namespaces = [
   { binding = "shorts", id = "263387813dc24671800cecf7d86b0a92" }
 ]
+
+[[d1_databases]]
+binding = "DB"
+database_name = "s-esteban-soubiran-site"
+database_id = "6b9dddd9-ea22-44cd-8ef8-9944adc385b2"
 
 [build]
 command = "pnpm run build"
