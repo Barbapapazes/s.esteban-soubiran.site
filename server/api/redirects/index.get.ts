@@ -3,6 +3,8 @@ import { eq } from 'drizzle-orm'
 export default defineEventHandler(async (event) => {
   requireBasicAuth(event)
 
+  return await useDb().select().from(tables.redirects).all()
+
   const redirects = await useDb().select().from(tables.redirects).leftJoin(tables.activities, eq(tables.activities.redirectId, tables.redirects.id)).all()
 
   return redirects
