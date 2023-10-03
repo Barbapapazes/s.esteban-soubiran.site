@@ -1,5 +1,21 @@
 <script lang="ts" setup>
+import type { Redirect } from '~/types/redirect'
+
 const { data, refresh, pending } = await useFetch('/api/redirects')
+
+function addRedirect(redirect: Redirect | null) {
+  if (!data.value || !redirect)
+    return
+
+  data.value.push(redirect)
+}
+
+function deleteRedirect(redirect: Redirect | null) {
+  if (!data.value || !redirect)
+    return
+
+  data.value = data.value.filter(r => r.id !== redirect.id)
+}
 </script>
 
 <template>
@@ -9,13 +25,13 @@ const { data, refresh, pending } = await useFetch('/api/redirects')
     </h1>
 
     <div class="flex flex-row gap-4">
-      <ShortsFormModal @refresh="refresh" />
+      <ShortsFormModal @add="addRedirect($event)" />
 
       <UButton icon="i-heroicons-arrow-path" color="white" :loading="pending" @click="refresh">
         Refresh
       </UButton>
     </div>
 
-    <ShortsTable v-if="data" :data="data" :loading="pending" @refresh="refresh" />
+    <ShortsTable v-if="data" :data="data" :loading="pending" @delete="deleteRedirect($event)" />
   </main>
 </template>

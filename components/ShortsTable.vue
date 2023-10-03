@@ -1,17 +1,12 @@
 <script lang="ts" setup>
-interface Redirect {
-  name: string
-  url: string
-  id: number
-  countActivities: number
-}
+import type { Redirect } from '~/types/redirect'
 
 defineProps<{
   data: Redirect[]
 }>()
 
 const emit = defineEmits<{
-  refresh: []
+  delete: [redirect: Redirect | null]
 }>()
 
 const columns = ref([
@@ -36,12 +31,6 @@ const columns = ref([
   },
 ])
 
-async function deleteItem(name: string) {
-  await useFetch(`/api/redirects/${name}`, { method: 'delete' })
-  emit('refresh')
-}
-
-const toast = useToast()
 const createActions = function (row: Redirect) {
   const origin = window.location.origin
   const source = ref(`${origin}/r/${row.name}`)
@@ -54,7 +43,7 @@ const createActions = function (row: Redirect) {
         icon: 'i-heroicons-clipboard',
         click: () => {
           copy()
-          toast.add({
+          useToast().add({
             id: 'copy-short',
             title: `Short '${row.name}' copied`,
             icon: 'i-heroicons-clipboard-document-check',
@@ -71,13 +60,9 @@ const createActions = function (row: Redirect) {
     [{
       label: 'Delete',
       icon: 'i-heroicons-trash',
-      click: () => {
-        deleteItem(row.name)
-        toast.add({
-          id: 'delete-short',
-          title: `Short ${row.name} deleted`,
-          icon: 'i-heroicons-trash',
-        })
+      click: async () => {
+        const redirect = await deleteRedirect(row.name, useToast())
+        emit('delete', redirect.value)
       },
     }],
   ]

@@ -1,17 +1,21 @@
-export default defineEventHandler(async (event) => {
+import { z } from 'zod'
+import type { RedirectWithCountActivities } from '~/types/redirect'
+
+export default defineEventHandler(async (event): Promise<RedirectWithCountActivities> => {
   requireBasicAuth(event)
 
-  const body = await readBody<{ name: string | undefined; url: string | undefined }>(event)
+  const { name, url } = await readValidatedBody(event, z.object({
+    name: z.string().min(1),
+    url: z.string().url(),
+  }).parse)
 
-  if (!body.name || !body.url)
-    throw createError({ statusCode: 400, message: 'You must provide a name and a url' })
+  const redirect = await useDb().insert(tables.redirects).values({ name, url }).returning().get()
 
-  const name = body.name
-  const url = body.url
-
-  // TODO: validate name and url
-
-  await useDb().insert(tables.redirects).values({ name, url }).run()
-
-  return sendNoContent(event, 201)
+  setResponseStatus(event, 201)
+  return {
+    id: redirect.id,
+    name: redirect.name,
+    url: redirect.url,
+    countActivities: 0,
+  }
 })

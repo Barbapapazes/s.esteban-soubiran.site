@@ -1,8 +1,9 @@
 <script lang="ts" setup>
 import type { FormError, FormSubmitEvent } from '@nuxt/ui/dist/runtime/types/form'
+import type { Redirect } from '~/types/redirect'
 
 const emit = defineEmits<{
-  refresh: []
+  add: [redirect: Redirect | null]
 }>()
 
 const isOpen = ref(false)
@@ -28,19 +29,22 @@ function validate(state: {
   return errors
 }
 
-async function createShort(event: FormSubmitEvent<{ name: string; url: string }>) {
+async function submit(event: FormSubmitEvent<{ name: string; url: string }>) {
   loading.value = true
 
-  await useFetch('/api/redirects', { method: 'POST', body: event.data })
-
-  emit('refresh')
+  const redirect = await createRedirect(event.data, useToast())
 
   loading.value = false
-  isOpen.value = false
 
-  state.value = {
-    name: '',
-    url: '',
+  if (redirect.value) {
+    emit('add', redirect.value)
+
+    isOpen.value = false
+
+    state.value = {
+      name: '',
+      url: '',
+    }
   }
 }
 </script>
@@ -56,7 +60,7 @@ async function createShort(event: FormSubmitEvent<{ name: string; url: string }>
         </h2>
       </template>
 
-      <UForm id="create" :validate="validate" :state="state" class="flex flex-col gap-4" @submit="createShort">
+      <UForm id="create" :validate="validate" :state="state" class="flex flex-col gap-4" @submit="submit">
         <UFormGroup label="Name" name="name" required>
           <UInput v-model="state.name" type="text" placeholder="Short name" icon="i-heroicons-finger-print" />
         </UFormGroup>

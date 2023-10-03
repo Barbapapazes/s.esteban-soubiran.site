@@ -13,7 +13,7 @@
     "migrations": "drizzle-kit generate:sqlite"
   },
   "dependencies": {
-    "@nuxt/ui": "^2.8.1"
+    "@nuxt/ui": "^2.9.0"
   },
   "devDependencies": {
     "@antfu/eslint-config": "0.43.1",
@@ -25,6 +25,7 @@
     "drizzle-kit": "^0.19.13",
     "drizzle-orm": "^0.28.6",
     "eslint": "^8.50.0",
-    "nuxt": "^3.7.4"
+    "nuxt": "^3.7.4",
+    "zod": "^3.22.2"
   }
 }

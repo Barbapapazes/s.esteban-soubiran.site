@@ -1,4 +1,6 @@
-export default defineEventHandler(async (event) => {
+import type { Redirect } from '~/types/redirect'
+
+export default defineEventHandler(async (event): Promise<Redirect[]> => {
   requireBasicAuth(event)
 
   const redirects = await useDb().select().from(tables.redirects).all()
