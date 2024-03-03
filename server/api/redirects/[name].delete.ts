@@ -9,7 +9,7 @@ export default defineEventHandler(async (event): Promise<Redirect> => {
   if (!name)
     throw createError({ statusCode: 400, message: 'No name provided' })
 
-  const redirect = await useDb().delete(tables.redirects).where(eq(tables.redirects.name, name)).returning().get()
+  const redirect = await useDrizzle().delete(tables.redirects).where(eq(tables.redirects.name, name)).returning().get()
 
   if (!redirect)
     throw createError({ statusCode: 404, message: 'Redirect not found' })

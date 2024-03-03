@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import type { FormError, FormSubmitEvent } from '@nuxt/ui/dist/runtime/types/form'
+import type { FormError, FormSubmitEvent } from '#ui/types'
 import type { Redirect } from '~/types/redirect'
 
 const emit = defineEmits<{
@@ -29,15 +29,13 @@ function validate(state: {
   return errors
 }
 
-async function submit(event: FormSubmitEvent<{ name: string; url: string }>) {
+const toast = useToast()
+async function submit(event: FormSubmitEvent<{ name: string, url: string }>) {
   loading.value = true
+  try {
+    const redirect = await createRedirect(event.data)
 
-  const redirect = await createRedirect(event.data, useToast())
-
-  loading.value = false
-
-  if (redirect.value) {
-    emit('add', redirect.value)
+    emit('add', redirect)
 
     isOpen.value = false
 
@@ -45,6 +43,24 @@ async function submit(event: FormSubmitEvent<{ name: string; url: string }>) {
       name: '',
       url: '',
     }
+  }
+  catch (error) {
+    console.error(error)
+    if (error instanceof Error) {
+      toast.add({
+        title: error.name,
+        description: error.message,
+        color: 'red',
+      })
+    }
+    toast.add({
+      title: 'Error',
+      description: 'An error occurred while creating the redirect',
+      color: 'red',
+    })
+  }
+  finally {
+    loading.value = false
   }
 }
 </script>
@@ -62,17 +78,17 @@ async function submit(event: FormSubmitEvent<{ name: string; url: string }>) {
 
       <UForm id="create" :validate="validate" :state="state" class="flex flex-col gap-4" @submit="submit">
         <UFormGroup label="Name" name="name" required>
-          <UInput v-model="state.name" type="text" placeholder="Short name" icon="i-heroicons-finger-print" />
+          <UInput v-model="state.name" type="text" placeholder="Short name" icon="i-ph-text-t-duotone" />
         </UFormGroup>
         <UFormGroup label="URL" name="url" required>
-          <UInput v-model="state.url" type="url" placeholder="Short URL" icon="i-heroicons-link" />
+          <UInput v-model="state.url" type="url" placeholder="Short URL" icon="i-ph-link-duotone" />
         </UFormGroup>
       </UForm>
 
       <template #footer>
         <div class="flex flex-row justify-end gap-4">
           <UButton label="Cancel" variant="outline" @click="isOpen = false" />
-          <UButton type="submit" form="create" icon="i-heroicons-plus" :loading="loading">
+          <UButton type="submit" form="create" icon="i-ph-plus" :loading="loading">
             Create
           </UButton>
         </div>

@@ -9,7 +9,10 @@ export default defineEventHandler(async (event): Promise<RedirectWithCountActivi
     url: z.string().url(),
   }).parse)
 
-  const redirect = await useDb().insert(tables.redirects).values({ name, url }).returning().get()
+  const redirect = await useDrizzle().insert(tables.redirects).values({
+    name,
+    url,
+  }).returning().get()
 
   setResponseStatus(event, 201)
   return {

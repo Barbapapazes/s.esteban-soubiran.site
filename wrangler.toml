@@ -1,9 +1,6 @@
 name = "s-esteban-soubiran-site"
 compatibility_date = "2023-08-07"
-
-kv_namespaces = [
-  { binding = "shorts", id = "263387813dc24671800cecf7d86b0a92" }
-]
+kv_namespaces = [ { binding = "shorts", id = "263387813dc24671800cecf7d86b0a92" } ]
 
 [[d1_databases]]
 binding = "DB"

@@ -1,10 +1,21 @@
-import process from 'node:process'
-
 export default defineNuxtConfig({
+  extends: ['@nuxt/ui-pro', '@nuxthub/core'],
   modules: ['@nuxt/ui', '@vueuse/nuxt'],
+
+  ui: {
+    icons: ['ph'],
+  },
+
+  runtimeConfig: {
+    basicAuth: {
+      username: '',
+      password: '',
+    },
+  },
+
   routeRules: {
     '/': {
-      ssr: false,
+      ssr: false, // To have basic auth.
     },
     '/r': {
       redirect: {
@@ -13,15 +24,6 @@ export default defineNuxtConfig({
       },
     },
   },
-  nitro: {
-    storage: { db: { driver: 'cloudflare-kv-binding', binding: 'shorts' } },
-    devStorage: { db: { driver: 'fs', base: '.nuxt/data/db' } },
-    runtimeConfig: {
-      basicAuth: {
-        username: process.env.BASIC_AUTH_USERNAME,
-        password: process.env.BASIC_AUTH_PASSWORD,
-      },
-    },
-  },
+
   devtools: { enabled: true },
 })
