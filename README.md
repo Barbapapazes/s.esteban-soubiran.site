@@ -1,19 +1,23 @@
 # Personal URLs Shortener
 
-This is a personal URLs shortener built with [Nuxt 3](https://nuxt.com) and [Nuxt UI](https://ui.nuxt.com) on top of [Cloudflare Workers](https://workers.cloudflare.com/) and [Cloudflare KV](https://www.cloudflare.com/products/workers-kv/).
+This is a personal URLs shortener built with [Nuxt 3](https://nuxt.com), [Nuxt Hub](https://hub.nuxt.com)  , and [Nuxt UI Pro](https://ui.nuxt.com/pro) on top of [Cloudflare Workers](https://workers.cloudflare.com/) and [Cloudflare D1](https://developers.cloudflare.com/d1/).
 
 > **Note**
 > You can fork this project for your own use but this is more like a demo app than a production-ready app.
-
-_Cloudflare KV is not ideal for this use case since data propagation is not instant but it way simpler to setup than a database like D1._
 
 ## Setup
 
 Make sure to install the dependencies:
 
 ```bash
-# pnpm
-pnpm install
+bun install
+```
+
+You must also create a `.env` file with the following environment variables:
+
+```bash
+NUXT_BASIC_AUTH_USERNAME=<username>
+NUXT_BASIC_AUTH_PASSWORD=<password>
 ```
 
 ## Development Server
@@ -21,8 +25,7 @@ pnpm install
 Start the development server on `http://localhost:3000`:
 
 ```bash
-# pnpm
-pnpm run dev
+bun run dev
 ```
 
 ## Production
@@ -30,13 +33,11 @@ pnpm run dev
 Build the application for production:
 
 ```bash
-# pnpm
-pnpm run build
+bun run build
 ```
 
 Locally preview production build:
 
 ```bash
-# pnpm
-pnpm run preview
+bun run preview
 ```
