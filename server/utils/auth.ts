@@ -10,7 +10,7 @@ export function requireBasicAuth(event: H3Event) {
   // Decode base64 encoded string
   const [username, password] = Buffer.from(authentication.split(' ')[1], 'base64').toString().split(':')
 
-  const basicAuthConfig = useRuntimeConfig().basicAuth
+  const basicAuthConfig = useRuntimeConfig(event).basicAuth
   if (username === basicAuthConfig.username && password === basicAuthConfig.password)
     return
 
