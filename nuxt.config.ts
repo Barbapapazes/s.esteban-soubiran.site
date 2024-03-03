@@ -8,8 +8,8 @@ export default defineNuxtConfig({
 
   runtimeConfig: {
     basicAuth: {
-      username: '',
-      password: '',
+      username: process.env.NUXT_BASIC_AUTH_USERNAME,
+      password: process.env.NUXT_BASIC_AUTH_PASSWORD
     },
   },
 
