@@ -19,7 +19,7 @@
     "@nuxthub/core": "^0.2.1"
   },
   "devDependencies": {
-    "@antfu/eslint-config": "^2.7.0",
+    "@antfu/eslint-config": "^2.11.4",
     "@nuxt/devtools": "latest",
     "@types/better-sqlite3": "^7.6.5",
     "@vueuse/core": "^10.4.1",
