@@ -14,8 +14,8 @@
   },
   "dependencies": {
     "@iconify-json/ph": "^1.1.11",
-    "@nuxt/ui": "^2.9.0",
-    "@nuxt/ui-pro": "^1.0.1",
+    "@nuxt/ui": "^2.18.7",
+    "@nuxt/ui-pro": "^1.4.4",
     "@nuxthub/core": "^0.2.1"
   },
   "devDependencies": {
@@ -28,7 +28,7 @@
     "drizzle-kit": "^0.20.14",
     "drizzle-orm": "^0.29.4",
     "eslint": "^8.57.0",
-    "nuxt": "^3.7.4",
+    "nuxt": "^3.13.2",
     "wrangler": "^3.30.1",
     "zod": "^3.22.2"
   }
